@@ -15,8 +15,11 @@ namespace BooksAutomation.Pages
         }
 
         #region Elements
-        [FindsBy(How = How.Id, Using = "#loginLink")]
+        [FindsBy(How = How.Id, Using = "loginLink")]
         public IWebElement LoginLink;
+
+        [FindsBy(How = How.CssSelector, Using = ".navbar-brand")]
+        public IWebElement PageCaption;
 
         #endregion
 
