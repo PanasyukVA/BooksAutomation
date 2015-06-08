@@ -1,9 +1,8 @@
 ﻿using System;
+using System.Collections.Specialized;
 using System.Configuration;
-using System.IO;
-// using ST.Utilities;
 
-namespace ST.Configuration
+namespace BooksAutomation.Configuration
 {
     public class EnvironmentConfiguration
     {
@@ -16,28 +15,31 @@ namespace ST.Configuration
         public TimeSpan ImplicitTimeWait { get; set; }
         public TimeSpan WaitPageForLoad { get; set; }
 
-        public string ST_CustomerId { get; set; }
-        public string ST_Username { get; set; }
-        public string ST_Password { get; set; }
+        public string Books_UserEmail { get; set; }
+        public string Books_UserPassword { get; set; }
 
         public string ScreenshotFolder { get; set; }
 
         public EnvironmentConfiguration()
         {
-            this.CurrentBorwser = int.Parse(ConfigurationManager.AppSettings["CurrentBrowser"]);
-            this.CountOfTestRun = int.Parse(ConfigurationManager.AppSettings["CountOfTestRun"]);
+            NameValueCollection section = ConfigurationManager.GetSection("Main") as NameValueCollection;
+            this.CurrentBorwser = int.Parse(section["CurrentBrowser"]);
+            this.CountOfTestRun = int.Parse(section["CountOfTestRun"]);
 
-            this.FirefoxProfilePath = ConfigurationManager.AppSettings["FirefoxProfile"];
-            this.ChromeProfilePath = ConfigurationManager.AppSettings["ChromeProfile"];
+            section = ConfigurationManager.GetSection("UserProfiles") as NameValueCollection;
+            this.FirefoxProfilePath = section["FirefoxProfile"];
+            this.ChromeProfilePath = section["ChromeProfile"];
 
-            this.ImplicitTimeWait = TimeSpan.FromSeconds(int.Parse(ConfigurationManager.AppSettings["ImplicitTimeWait"]));
-            this.WaitPageForLoad = TimeSpan.FromSeconds(int.Parse(ConfigurationManager.AppSettings["WaitPageForLoad"]));
+            section = ConfigurationManager.GetSection("Timeouts") as NameValueCollection;
+            this.ImplicitTimeWait = TimeSpan.FromSeconds(int.Parse(section["ImplicitTimeWait"]));
+            this.WaitPageForLoad = TimeSpan.FromSeconds(int.Parse(section["WaitPageForLoad"]));
 
-            this.ST_CustomerId = ConfigurationManager.AppSettings["ST_CustomerId"];
-            this.ST_Username = ConfigurationManager.AppSettings["ST_Username"];
-            this.ST_Password = ConfigurationManager.AppSettings["ST_Password"];
+            section = ConfigurationManager.GetSection("BooksAccount") as NameValueCollection;
+            this.Books_UserEmail = section["Books_UserEmail"];
+            this.Books_UserPassword = section["Books_UserPassword"];
 
-            this.ScreenshotFolder = ConfigurationManager.AppSettings["SavePath"];
+            section = ConfigurationManager.GetSection("Screenshot") as NameValueCollection;
+            this.ScreenshotFolder = section["SavePath"];
 
         }
 
