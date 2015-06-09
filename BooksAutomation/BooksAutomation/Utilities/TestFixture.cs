@@ -9,7 +9,7 @@ using OpenQA.Selenium.Safari;
 using BooksAutomation.Configuration;
 using BooksAutomation.Pages;
 
-namespace BooksAutomation
+namespace BooksAutomation.Utilities
 {
     public class TestFixture : IDisposable
     {
@@ -78,8 +78,8 @@ namespace BooksAutomation
 
         public void Dispose()
         {
-            //driver.Manage().Cookies.DeleteAllCookies();
-            //driver.Quit();
+            driver.Manage().Cookies.DeleteAllCookies();
+            driver.Quit();
         }
 
         #endregion

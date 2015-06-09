@@ -63,15 +63,18 @@
     <Compile Include="Pages\BooksPage.cs" />
     <Compile Include="Pages\LoginPage.cs" />
     <Compile Include="Pages\PagesCollection.cs" />
-    <Compile Include="TestFixture.cs" />
-    <Compile Include="Tests\SmokeTests\LoadMainPage.cs" />
+    <Compile Include="Tests\FunctionalTests\EditBookFTest.cs" />
+    <Compile Include="Tests\FunctionalTests\EditAuthorFTest.cs" />
+    <Compile Include="Tests\FunctionalTests\AddBookFTest.cs" />
+    <Compile Include="Tests\FunctionalTests\AddAuthorFTest.cs" />
+    <Compile Include="Utilities\TestFixture.cs" />
+    <Compile Include="Tests\SmokeTests\LoadLoginPageSTest.cs" />
+    <Compile Include="Tests\SmokeTests\LoadMainPageSTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\CustomExpectedConditions.cs" />
     <Compile Include="Utilities\CustomMethods.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Tests\FunctionalTests\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Configuration\app.config" />
     <None Include="packages.config" />
