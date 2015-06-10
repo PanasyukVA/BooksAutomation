@@ -54,5 +54,21 @@ namespace BooksAutomation.Utilities
                 return null;
             }
         }
+
+        public static Func<IWebDriver, bool> ElementIsNotPresent(By locator)
+        {
+            return (driver) =>
+            {
+                try
+                {
+                    driver.FindElement(locator);
+                    return false;
+                }
+                catch (NoSuchElementException)
+                {
+                    return true;
+                }
+            };
+        }
     }
 }

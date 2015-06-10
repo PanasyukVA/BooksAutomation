@@ -7,21 +7,20 @@ using BooksAutomation.Utilities;
 namespace BooksAutomation.Tests.SmokeTests
 {
     [TestClass]
-    public class LoadLoginPageSTest : CustomMethods
+    public class LoadLoginPageSTest
     {
-        [TestMethod]
+        [TestMethod, TestCategory("SmokeTests")]
         public void LoadLoginPage()
         {
             using (TestFixture fixture = new TestFixture())
             {
                 // Arrange
-                string expectedPageCaption;
-                string actualPageCaption = "Log in.";
+                string expectedPageCaption = "Log in.";
+                string actualPageCaption;
 
                 // Act
                 fixture.Pages.loginPage.GetPage();
-                WaitUntil(fixture.driver, ExpectedConditions.ElementExists(By.XPath("//html")), TimeSpan.FromSeconds(10));
-                expectedPageCaption = fixture.Pages.loginPage.CaptionLabel.Text;
+                actualPageCaption = fixture.Pages.loginPage.CaptionLabel.Text;
 
                 // Assert
                 Assert.AreEqual(expectedPageCaption, actualPageCaption, String.Format("The {0} page is not loaded", expectedPageCaption));

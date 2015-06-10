@@ -7,10 +7,10 @@ using BooksAutomation.Utilities;
 namespace BooksAutomation.Tests.SmokeTests
 {
     [TestClass]
-    public class EditAuthorFTest : CustomMethods
+    public class LogInOnSiteSTest
     {
-        [TestMethod, TestCategory("FunctionalTests")]
-        public void EditAuthor()
+        [TestMethod, TestCategory("SmokeTests")]
+        public void LogInOnSite()
         {
             using (TestFixture fixture = new TestFixture())
             {
@@ -20,11 +20,17 @@ namespace BooksAutomation.Tests.SmokeTests
                 // Act
                 fixture.Pages.loginPage.GetPage();
                 fixture.Pages.loginPage.Login(fixture.config.Books_UserEmail, fixture.config.Books_UserPassword);
-                fixture.Pages.booksPage.EditAuthor(1, "AuthorEditTest");
-                actualResult = fixture.Pages.booksPage.AuthorResultModalLabel.Displayed;
+                try
+                {
+                    actualResult = fixture.driver.FindElement(By.LinkText(String.Format("Hello {0}!", fixture.config.Books_UserEmail))).Displayed;
+                }
+                catch (NoSuchElementException)
+                {
+                    actualResult = false;
+                }
 
                 // Assert
-                Assert.IsTrue(actualResult, "The author is not edited.");
+                Assert.IsTrue(actualResult, "Unable to log in on the site");
             }
         }
     }

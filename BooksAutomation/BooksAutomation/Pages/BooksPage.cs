@@ -20,14 +20,17 @@ namespace BooksAutomation.Pages
         [FindsBy(How = How.Id, Using = "loginLink")]
         public IWebElement LoginLink;
 
-        [FindsBy(How = How.XPath, Using = @"//a[contains(@title = 'Log off')]")]
-        public IWebElement LogoffLink;
-
         #endregion
 
         #region Labels
         [FindsBy(How = How.CssSelector, Using = ".navbar-brand")]
         public IWebElement CaptionLabel;
+
+        [FindsBy(How = How.Id, Using = "bookResultModal")]
+        public IWebElement BookResultModalLabel;
+
+        [FindsBy(How = How.Id, Using = "authorResultModal")]
+        public IWebElement AuthorResultModalLabel;
 
         #endregion
 
@@ -37,12 +40,6 @@ namespace BooksAutomation.Pages
 
         [FindsBy(How = How.Id, Using = "btnCreateAuthor")]
         public IWebElement AddAuthorButton;
-
-        [FindsBy(How = How.Id, Using = "btnEditBook")]
-        public IWebElement EditBookButton;
-
-        [FindsBy(How = How.Id, Using = "btnEditAuthor")]
-        public IWebElement EditAuthorButton;
 
         [FindsBy(How = How.Id, Using = "btnSubmitAuthor")]
         public IWebElement SubmitAuthorButton;
@@ -68,37 +65,68 @@ namespace BooksAutomation.Pages
         public void GetPage()
         {
             _driver.Navigate().GoToUrl("http://localhost/BooksMVC/");
-        }
-
-        public void Logoff()
-        {
-            LogoffLink.Click();
+            WaitUntil(_driver, ExpectedConditions.ElementExists(By.XPath("//html")), TimeSpan.FromSeconds(10));
         }
 
         public void AddAuthor(string authorName)
         {
             AddAuthorButton.Click();
-            AuthorNameField.Text.Insert(0, authorName);
+
+            WaitUntil(_driver, CustomExpectedConditions.ElementIsVisible(AuthorNameField), TimeSpan.FromSeconds(10));
+            AuthorNameField.SendKeys(authorName);
+
+            WaitUntil(_driver, CustomExpectedConditions.ElementIsVisible(SubmitAuthorButton), TimeSpan.FromSeconds(10));
             SubmitAuthorButton.Click();
+            WaitForSuccessAjax(_driver, TimeSpan.FromSeconds(10));
         }
 
-        public void AddBook(string bookName, int[] authorsId)
+        public void AddBook(string bookName, int[] bookAuthors)
         {
             AddBookButton.Click();
-            BookNameField.Text.Insert(0, bookName);
+
+            WaitUntil(_driver, CustomExpectedConditions.ElementIsVisible(BookNameField), TimeSpan.FromSeconds(10));
+            BookNameField.SendKeys(bookName);
+
+            WaitUntil(_driver, CustomExpectedConditions.ElementIsVisible(SelectedAuthorsField), TimeSpan.FromSeconds(10));
             SelectElement SelectedAuthorsSelect = new SelectElement(SelectedAuthorsField);
-            foreach(int authorId in authorsId)
+            foreach(int authorId in bookAuthors)
                 SelectedAuthorsSelect.SelectByIndex(authorId);
+
+            WaitUntil(_driver, CustomExpectedConditions.ElementIsVisible(SubmitBookButton), TimeSpan.FromSeconds(10));
             SubmitBookButton.Click();
+            WaitForSuccessAjax(_driver, TimeSpan.FromSeconds(10));
         }
 
-        public void EditAuthor(int authorId)
+        public void EditAuthor(int authorId, string authorNewName)
         {
- 
+            _driver.FindElement(By.CssSelector(String.Format("#aEditAuthor[data-authorid='{0}']", authorId))).Click();
+
+            WaitUntil(_driver, CustomExpectedConditions.ElementIsVisible(AuthorNameField), TimeSpan.FromSeconds(10));
+            AuthorNameField.Clear();
+            AuthorNameField.SendKeys(authorNewName);
+
+            WaitUntil(_driver, CustomExpectedConditions.ElementIsVisible(SubmitAuthorButton), TimeSpan.FromSeconds(10));
+            SubmitAuthorButton.Click();
+            WaitForSuccessAjax(_driver, TimeSpan.FromSeconds(10));
         }
 
-        public void EditBook() 
-        { }
+        public void EditBook(int bookId, string bookNewName, int[] bookNewAuthors) 
+        {
+            _driver.FindElement(By.CssSelector(String.Format("#btnEditBook[data-bookid='{0}']", bookId))).Click();
+
+            WaitUntil(_driver, CustomExpectedConditions.ElementIsVisible(BookNameField), TimeSpan.FromSeconds(10));
+            BookNameField.Clear();
+            BookNameField.SendKeys(bookNewName);
+
+            WaitUntil(_driver, CustomExpectedConditions.ElementIsVisible(SelectedAuthorsField), TimeSpan.FromSeconds(10));
+            SelectElement SelectedAuthorsSelect = new SelectElement(SelectedAuthorsField);
+            foreach (int authorId in bookNewAuthors)
+                SelectedAuthorsSelect.SelectByIndex(authorId);
+
+            WaitUntil(_driver, CustomExpectedConditions.ElementIsVisible(SubmitBookButton), TimeSpan.FromSeconds(10));
+            SubmitBookButton.Click();
+            WaitForSuccessAjax(_driver, TimeSpan.FromSeconds(10));
+        }
 
         #endregion
     }
