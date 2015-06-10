@@ -103,11 +103,6 @@ namespace BooksAutomation.Utilities
             }
         }
 
-        public void Sleep(int milliseconds)
-        {
-            System.Threading.Thread.Sleep(milliseconds);
-        }
-
         public Dictionary<string, object> WebTimings(IWebDriver driver)
         {
             var webTiming = (Dictionary<string, object>)((IJavaScriptExecutor)driver)
