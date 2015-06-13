@@ -42,8 +42,6 @@ namespace BooksAutomation.Utilities
         }
     }
 
-    
-
     public class CustomMethods
     {
         private EnvironmentConfiguration config = new EnvironmentConfiguration();
@@ -103,6 +101,30 @@ namespace BooksAutomation.Utilities
             }
         }
 
+        public bool IsElementVisible(IWebElement element)
+        {
+            try
+            {
+                return element.Displayed;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+        }
+
+        public bool IsElementClickable(IWebElement element)
+        {
+            try
+            {
+                return element.Displayed && element.Enabled;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+        }
+
         public Dictionary<string, object> WebTimings(IWebDriver driver)
         {
             var webTiming = (Dictionary<string, object>)((IJavaScriptExecutor)driver)
@@ -146,7 +168,5 @@ namespace BooksAutomation.Utilities
 
             ss.SaveAsFile(Path.Combine(config.ScreenshotFolder, string.Format("{0}.png", filename)), ImageFormat.Png); //use any of the built in image formating
         }
-
-
     }
 }

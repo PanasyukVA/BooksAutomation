@@ -26,11 +26,11 @@ namespace BooksAutomation.Pages
         [FindsBy(How = How.Id, Using = "Password")]
         public IWebElement PasswordTextBox;
 
+        #endregion
+
+        #region Labels
         [FindsBy(How = How.CssSelector, Using = "h2")]
         public IWebElement CaptionLabel;
-
-        [FindsBy(How = How.Id, Using = "loginLink")]
-        public IWebElement LoginLink;
 
         #endregion
 
@@ -44,8 +44,6 @@ namespace BooksAutomation.Pages
         public void GetPage()
         {
             booksPage.GetPage();
-            WaitForSuccessAjax(this._driver, TimeSpan.FromSeconds(10));
-            WaitUntil(this._driver, CustomExpectedConditions.ElementIsNotPresent(By.ClassName("blockUI")), TimeSpan.FromSeconds(10));
             booksPage.LoginLink.Click();
             WaitUntil(_driver, ExpectedConditions.ElementExists(By.XPath("//html")), TimeSpan.FromSeconds(10));
         }
@@ -56,6 +54,15 @@ namespace BooksAutomation.Pages
             PasswordTextBox.SendKeys(password);
             LoginButton.Click();
             WaitUntil(this._driver, CustomExpectedConditions.ElementIsNotPresent(By.ClassName("blockUI")), TimeSpan.FromSeconds(10));
+        }
+
+        public void Logoff() 
+        {
+            if (IsElementVisible(booksPage.LogoffLink))
+            {
+                booksPage.LogoffLink.Click();
+                WaitUntil(_driver, ExpectedConditions.ElementExists(By.XPath("//html")), TimeSpan.FromSeconds(10));
+            }
         }
 
         #endregion

@@ -20,6 +20,9 @@ namespace BooksAutomation.Pages
         [FindsBy(How = How.Id, Using = "loginLink")]
         public IWebElement LoginLink;
 
+        [FindsBy(How = How.LinkText, Using = "Log off")]
+        public IWebElement LogoffLink;
+
         #endregion
 
         #region Labels
@@ -47,6 +50,12 @@ namespace BooksAutomation.Pages
         [FindsBy(How = How.Id, Using = "btnSubmitBook")]
         public IWebElement SubmitBookButton;
 
+        [FindsBy(How = How.Id, Using = "btnOkAuthorResult")]
+        public IWebElement OkAuthorResultButton;
+
+        [FindsBy(How = How.Id, Using = "btnOkBookResult")]
+        public IWebElement OkBookResultButton;
+
         #endregion
 
         #region Fields
@@ -66,6 +75,8 @@ namespace BooksAutomation.Pages
         {
             _driver.Navigate().GoToUrl("http://localhost/BooksMVC/");
             WaitUntil(_driver, ExpectedConditions.ElementExists(By.XPath("//html")), TimeSpan.FromSeconds(10));
+            WaitForSuccessAjax(this._driver, TimeSpan.FromSeconds(20));
+            WaitUntil(this._driver, CustomExpectedConditions.ElementIsNotPresent(By.ClassName("blockUI")), TimeSpan.FromSeconds(10));
         }
 
         public void AddAuthor(string authorName)
@@ -78,6 +89,7 @@ namespace BooksAutomation.Pages
             WaitUntil(_driver, CustomExpectedConditions.ElementIsVisible(SubmitAuthorButton), TimeSpan.FromSeconds(10));
             SubmitAuthorButton.Click();
             WaitForSuccessAjax(_driver, TimeSpan.FromSeconds(10));
+            WaitUntil(this._driver, CustomExpectedConditions.ElementIsNotPresent(By.ClassName("blockUI")), TimeSpan.FromSeconds(10));
         }
 
         public void AddBook(string bookName, int[] bookAuthors)
@@ -95,6 +107,7 @@ namespace BooksAutomation.Pages
             WaitUntil(_driver, CustomExpectedConditions.ElementIsVisible(SubmitBookButton), TimeSpan.FromSeconds(10));
             SubmitBookButton.Click();
             WaitForSuccessAjax(_driver, TimeSpan.FromSeconds(10));
+            WaitUntil(this._driver, CustomExpectedConditions.ElementIsNotPresent(By.ClassName("blockUI")), TimeSpan.FromSeconds(10));
         }
 
         public void EditAuthor(int authorId, string authorNewName)
@@ -108,6 +121,7 @@ namespace BooksAutomation.Pages
             WaitUntil(_driver, CustomExpectedConditions.ElementIsVisible(SubmitAuthorButton), TimeSpan.FromSeconds(10));
             SubmitAuthorButton.Click();
             WaitForSuccessAjax(_driver, TimeSpan.FromSeconds(10));
+            WaitUntil(this._driver, CustomExpectedConditions.ElementIsNotPresent(By.ClassName("blockUI")), TimeSpan.FromSeconds(10));
         }
 
         public void EditBook(int bookId, string bookNewName, int[] bookNewAuthors) 
@@ -126,6 +140,23 @@ namespace BooksAutomation.Pages
             WaitUntil(_driver, CustomExpectedConditions.ElementIsVisible(SubmitBookButton), TimeSpan.FromSeconds(10));
             SubmitBookButton.Click();
             WaitForSuccessAjax(_driver, TimeSpan.FromSeconds(10));
+            WaitUntil(this._driver, CustomExpectedConditions.ElementIsNotPresent(By.ClassName("blockUI")), TimeSpan.FromSeconds(10));
+        }
+
+        public void ConfirmationResult()
+        {
+            if (IsElementClickable(OkAuthorResultButton))
+            {
+                OkAuthorResultButton.Click();
+                WaitForSuccessAjax(_driver, TimeSpan.FromSeconds(10));
+                WaitUntil(this._driver, CustomExpectedConditions.ElementIsNotPresent(By.ClassName("blockUI")), TimeSpan.FromSeconds(10));
+            }
+            else if (IsElementClickable(OkBookResultButton))
+            {
+                OkBookResultButton.Click();
+                WaitForSuccessAjax(_driver, TimeSpan.FromSeconds(10));
+                WaitUntil(this._driver, CustomExpectedConditions.ElementIsNotPresent(By.ClassName("blockUI")), TimeSpan.FromSeconds(10));
+            }
         }
 
         #endregion

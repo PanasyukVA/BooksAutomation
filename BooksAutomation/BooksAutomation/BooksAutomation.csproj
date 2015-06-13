@@ -68,6 +68,7 @@
     <Compile Include="Tests\FunctionalTests\AddBookFTest.cs" />
     <Compile Include="Tests\FunctionalTests\AddAuthorFTest.cs" />
     <Compile Include="Tests\SmokeTests\LogInOnSiteSTest.cs" />
+    <Compile Include="Tests\BaseTest.cs" />
     <Compile Include="Utilities\TestFixture.cs" />
     <Compile Include="Tests\SmokeTests\LoadLoginPageSTest.cs" />
     <Compile Include="Tests\SmokeTests\LoadMainPageSTest.cs" />
