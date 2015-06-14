@@ -13,7 +13,7 @@ namespace BooksAutomation.Tests.SmokeTests
         public void LoadLoginPage()
         {
             // Arrange
-            string expectedPageCaption = "Log in.";
+            string expectedPageCaption = "Log iin.";
             string actualPageCaption;
 
             // Act

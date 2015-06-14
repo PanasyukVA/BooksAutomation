@@ -37,11 +37,6 @@ namespace BooksAutomation.Configuration
             section = ConfigurationManager.GetSection("BooksAccount") as NameValueCollection;
             this.Books_UserEmail = section["Books_UserEmail"];
             this.Books_UserPassword = section["Books_UserPassword"];
-
-            section = ConfigurationManager.GetSection("Screenshot") as NameValueCollection;
-            this.ScreenshotFolder = section["SavePath"];
-
         }
-
     }
 }

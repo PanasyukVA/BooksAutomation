@@ -155,18 +155,18 @@ namespace BooksAutomation.Utilities
             return webTiming;
         }
 
-        public void TakeScreenshot(IWebDriver driver, string testName)
+        public void TakeScreenshot(IWebDriver driver, string resultsDir, string testName)
         {
             Screenshot ss = ((ITakesScreenshot)driver).GetScreenshot();
             byte[] screenshotAsByteArray = ss.AsByteArray;
             string ScreenshotFileName = generateFileName(testName);
 
-            if (!Directory.Exists(config.ScreenshotFolder))
+            if (!Directory.Exists(resultsDir))
             {
-                Directory.CreateDirectory(config.ScreenshotFolder);
+                Directory.CreateDirectory(resultsDir);
             }
 
-            ss.SaveAsFile(Path.Combine(config.ScreenshotFolder, ScreenshotFileName), ImageFormat.Png);
+            ss.SaveAsFile(Path.Combine(resultsDir, ScreenshotFileName), ImageFormat.Png);
         }
 
         public string generateFileName(string testName)

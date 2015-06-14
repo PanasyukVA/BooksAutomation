@@ -39,7 +39,7 @@ namespace BooksAutomation.Tests
         {
             if (TestContext.CurrentTestOutcome == UnitTestOutcome.Failed)
             {
-                fixture.Pages.booksPage.TakeScreenshot(fixture.driver, TestContext.FullyQualifiedTestClassName);
+                fixture.Pages.booksPage.TakeScreenshot(fixture.driver, TestContext.TestResultsDirectory, TestContext.FullyQualifiedTestClassName);
             }
             fixture.Pages.booksPage.ConfirmationResult();
             fixture.Pages.loginPage.Logoff();
