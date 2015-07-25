@@ -36,6 +36,7 @@ namespace BooksAutomation.Utilities
                 case 1:
                     {                       
                         driver = new ChromeDriver();
+                        driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
                         driver.Manage().Window.Maximize();
                         Debug.WriteLine("Tests will be run (or rerun) in Google Chrome...");
                     }
